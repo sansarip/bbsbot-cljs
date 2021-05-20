@@ -2,32 +2,10 @@
   (:require [taoensso.timbre :refer [info]]
             [macchiato.server :as http]
             [reitit.ring :as ring]
-            [reitit.coercion.spec :as c]
-            [reitit.swagger :as swagger]
             [macchiato.middleware.params :as params]
             [reitit.ring.coercion :as rrc]
-            [macchiato.middleware.restful-format :as rf]))
-
-(def no-auth-routes
-  [""
-   {:swagger  {:info {:title       "Example"
-                      :version     "1.0.0"
-                      :description "This is really an example"}}
-    :coercion c/coercion}
-   ["/swagger.json"
-    {:get {:no-doc  true
-           :handler (fn [req respond _]
-                      (let [handler (swagger/create-swagger-handler)]
-                        (handler req (fn [result]
-                                       (respond (assoc-in result [:headers :content-type] "application/json"))) _)))}}]
-   ["/test"
-    {:get  {:parameters {:query {:name string?}}
-            :responses  {200 {:body {:message string?}}}
-            :handler    (fn [request respond _]
-                          (respond {:status 200 :body {:message (str "Hello: " (-> request :parameters :query :name))}}))}
-     :post {:parameters {:body {:my-body string?}}
-            :handler    (fn [request respond _]
-                          (respond {:status 200 :body {:message (str "Hello: " (-> request :parameters :body :my-body))}}))}}]])
+            [macchiato.middleware.restful-format :as rf]
+            [bbsbot-cljs.routes :as routes]))
 
 (defn wrap-coercion-exception
   "Catches potential synchronous coercion exception in middleware chain"
@@ -59,7 +37,7 @@
 (def app
   (ring/ring-handler
     (ring/router
-      [no-auth-routes]
+      [routes/routes]
       {:data {:middleware [params/wrap-params
                            #(rf/wrap-restful-format % {:keywordize? true})
                            wrap-body-to-params
