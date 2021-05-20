@@ -1,0 +1,12 @@
+{:source-paths ["src" "test" "dev"]
+ :dependencies [[com.taoensso/timbre "4.10.0"]
+                [macchiato/core "0.2.17"]
+                [metosin/reitit "0.5.1"]
+                [metosin/spec-tools "0.10.3"]]
+ :nrepl        {:port 41643}
+ :builds       {:app {:target           :node-library
+                      :source-map       true
+                      :exports          {:server bbsbot-cljs.core/server}
+                      :output-dir       "target"
+                      :output-to        "target/main.js"
+                      :compiler-options {:optimizations :simple}}}}
