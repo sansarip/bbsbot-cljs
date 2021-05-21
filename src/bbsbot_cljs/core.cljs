@@ -51,7 +51,7 @@
   (let [host "127.0.0.1"
         port 3000]
     (http/start
-      {:handler    app
+      {:handler    #'app
        :host       host
        :port       port
        :on-success #(info "bbsbot started on" host ":" port)})))
