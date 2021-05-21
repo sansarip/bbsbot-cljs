@@ -46,7 +46,7 @@
                            rrc/coerce-response-middleware]}})
     (ring/create-default-handler)))
 
-(defn start-server []
+(defn start-server! []
   (info "Starting server...")
   (let [host "127.0.0.1"
         port 3000]

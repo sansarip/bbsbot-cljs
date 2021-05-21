@@ -6,7 +6,7 @@
  :nrepl        {:port 41643}
  :builds       {:app {:target           :node-library
                       :source-map       true
-                      :exports          {:server bbsbot-cljs.core/server}
+                      :exports          {:server bbsbot-cljs.core/start-server!}
                       :output-dir       "target"
                       :output-to        "target/main.js"
                       :compiler-options {:optimizations :simple}}}}
