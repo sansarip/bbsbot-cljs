@@ -5,7 +5,8 @@
             [macchiato.middleware.params :as params]
             [reitit.ring.coercion :as rrc]
             [macchiato.middleware.restful-format :as rf]
-            [bbsbot-cljs.routes :as routes]))
+            [bbsbot-cljs.routes :as routes]
+            [bbsbot-cljs.config :as config]))
 
 (defn wrap-coercion-exception
   "Catches potential synchronous coercion exception in middleware chain"
@@ -48,10 +49,8 @@
 
 (defn start-server! []
   (info "Starting server...")
-  (let [host "127.0.0.1"
-        port 3000]
-    (http/start
-      {:handler    #'app
-       :host       host
-       :port       port
-       :on-success #(info "bbsbot started on" host ":" port)})))
+  (http/start
+    {:handler    #'app
+     :host       config/server-host
+     :port       config/server-port
+     :on-success #(info (str "bbsbot started on " config/server-host ":" config/server-port))}))
