@@ -13,6 +13,9 @@
     {:get {:no-doc  true
            :handler handlers/swagger-json}}]
    ["/twitch"
-    ["/webhooks" {:get {:parameters {:query {:hub.challenge string?}}
-                        :handler    twitch-handlers/challenge}}]]])
+    ["/webhooks"
+     {:get {:parameters {:query {:hub.challenge string?}}
+            :handler    twitch-handlers/challenge}
+      :post {:parameters {:body {:data any?}}
+             :handler twitch-handlers/event}}]]])
 

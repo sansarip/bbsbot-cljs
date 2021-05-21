@@ -3,3 +3,6 @@
 
 (defn challenge [{{{challenge :hub.challenge} :query} :parameters} res _]
   (res (mur/ok challenge)))
+
+(defn event [req res _]
+  (res (mur/ok)))
